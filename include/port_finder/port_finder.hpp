@@ -14,6 +14,8 @@
 #include <regex>
 
 #define COMMAND_BUFFER_SIZE 128
+#define SERIAL_PORT_PATTERN "\\n"
+#define SERIAL_PORT_MONITORING_PATTERN "="
 
 namespace port_finder
 {
@@ -22,14 +24,15 @@ namespace port_finder
     private:
       std::string commandExecute(const char* command);
 
-      std::string listAllPorts(const std::string& serial_port_group);
-
       std::string findIDVendor(const std::string& serial_port);
-
+      
       std::string findIDVendorID(const std::string& serial_port);
-
+      
       std::string findIDModelID(const std::string& serial_port);
-
+      
+      std::string findIDPath(const std::string& serial_port);
+      
+      void listAllPorts(const std::string& serial_port_group);
 
       std::regex serial_port_pattern_;
 
@@ -45,24 +48,12 @@ namespace port_finder
 
       std::vector<std::string> serial_ports_;
 
-      std::string list_all_ports_command_;
-
-      std::string find_id_vendor_command_;
-
-      std::string find_id_vendor_id_command_;
-
-      std::string find_id_model_id_command_;
-
-      std::string find_id_path_command_;
-
       std::string find_device_name_command_;
 
-      std::string all_ports_;
+      std::vector<std::string> all_ports_;
 
       std::string id_vendor_;
       
-      std::string id_vendor_;
-
       std::string id_vendor_id_;
 
       std::string id_model_id_;
@@ -80,7 +71,7 @@ namespace port_finder
 
       ~PortFinder();
 
-      const std::string getPort(const std::string& serial_port_group, 
+      const std::string findPort(const std::string& serial_port_group, 
         std::string id_vendor, std::string id_vendor_id, std::string id_model_id,
         std::string id_model);
   };
